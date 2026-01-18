@@ -2,35 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Results | NeuroZen TOTAL/100 Assessment</title>
+  <title>Results | NeuroZen</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            'brand-primary': '#6366f1',
-            'brand-primary-hover': '#4f46e5',
-            'brand-accent': '#7c3aed',
-            'brand-accent-hover': '#6d28d9',
-            success: '#10b981',
-            warning: '#f59e0b',
-            danger: '#ef4444'
+            'brand-primary': '#6366f1', 'brand-primary-hover': '#4f46e5',
+            'brand-accent': '#7c3aed', 'brand-accent-hover': '#6d28d9',
+            success: '#10b981', warning: '#f59e0b', danger: '#ef4444'
           },
-          fontFamily: {
-            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          }
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] }
         },
       },
     }
   </script>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    .chart-container { height: 300px; width: 100%; }
+    @keyframes pulse-glow { 
+      0%, 100% { box-shadow: 0 0 20px rgba(16,185,129,0.3); } 
+      50% { box-shadow: 0 0 40px rgba(16,185,129,0.6); } 
+    }
+    .normal-glow { animation: pulse-glow 2s infinite; }
+  </style>
 </head>
-
 <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen py-12 px-4 font-sans">
-  <div class="max-w-5xl mx-auto">
+  <div class="max-w-6xl mx-auto">
     
     <!-- HEADER -->
     <div class="text-center mb-20">
@@ -39,9 +39,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.548A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
         </svg>
       </div>
-      <h1 class="text-6xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6 tracking-tight">
-        Your TOTAL Score
-      </h1>
+      <h1 class="text-6xl font-black bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-6 tracking-tight">Result Analysis</h1>
       <p class="text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">Complete 17-question analysis (Round 1 + Round 2) = <span class="font-bold text-3xl text-brand-primary">/100</span></p>
     </div>
 
@@ -52,30 +50,63 @@
       <p class="text-xl text-gray-500">Round 1 + Round 2 analysis complete</p>
     </div>
 
-    <!-- RESULTS CONTENT (HIDDEN INITIALLY) -->
+    <!-- RESULTS CONTENT -->
     <div id="resultsContent" class="hidden space-y-16">
-
-      <!-- TOTAL SCORE CARD -->
+      
+      <!-- TOTAL SCORE CARD WITH ROUND BREAKDOWN -->
       <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 p-12">
-        <div class="flex items-center justify-between mb-10">
+        <div class="flex items-center justify-between mb-12">
           <h2 class="text-4xl font-black text-gray-900">🎯 TOTAL /100</h2>
           <div id="totalBadge" class="px-8 py-4 rounded-3xl font-bold text-xl shadow-2xl"></div>
         </div>
         
-        <div class="grid lg:grid-cols-3 gap-8 items-center">
+        <div class="grid lg:grid-cols-3 gap-8 items-center mb-12">
+          <!-- TOTAL SCORE -->
           <div class="text-center lg:col-span-1">
-            <div class="text-7xl font-black bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent mb-4" id="totalScore">-</div>
+            <div class="text-7xl font-black mb-4" id="totalScoreEl">-</div>
             <div class="text-2xl font-bold text-gray-600 tracking-wide uppercase">Combined Score</div>
           </div>
-          <div class="lg:col-span-1 grid grid-cols-2 gap-6 p-8 rounded-3xl bg-gradient-to-br from-indigo-50 to-purple-50">
-            <div class="text-center">
-              <div class="text-5xl font-black text-orange-500" id="round1Score">-</div>
-              <div class="text-lg font-semibold text-gray-600 uppercase tracking-wide">Round 1 /50</div>
+          
+          <!-- ROUND 1 & ROUND 2 CARDS -->
+          <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- ROUND 1 CARD -->
+            <div class="group bg-gradient-to-br from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200 border-2 border-orange-200 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 bg-gradient-to-r from-orange-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <span class="text-2xl font-black text-white">1</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-gray-900 mb-1">Round 1</h3>
+                  <p class="text-sm font-semibold text-orange-700 uppercase tracking-wide">Daily Habits</p>
+                </div>
+              </div>
+              <div class="text-5xl font-black text-orange-600 mb-2" id="round1ScoreEl">-</div>
+              <div class="text-xl font-bold text-gray-600">/ 50 Points</div>
+              <div class="text-sm text-orange-700 mt-2 font-medium">Sleep, focus, stress & lifestyle</div>
             </div>
-            <div class="text-center">
-              <div class="text-5xl font-black text-purple-600" id="round2Score">-</div>
-              <div class="text-lg font-semibold text-gray-600 uppercase tracking-wide">Round 2 /50</div>
+
+            <!-- ROUND 2 CARD -->
+            <div class="group bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 border-2 border-purple-200 p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <span class="text-2xl font-black text-white">2</span>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold text-gray-900 mb-1">Round 2</h3>
+                  <p class="text-sm font-semibold text-purple-700 uppercase tracking-wide">Symptoms</p>
+                </div>
+              </div>
+              <div class="text-5xl font-black text-purple-600 mb-2" id="round2ScoreEl">-</div>
+              <div class="text-xl font-bold text-gray-600">/ 50 Points</div>
+              <div class="text-sm text-purple-700 mt-2 font-medium">Physical, emotional & coping</div>
             </div>
+          </div>
+        </div>
+
+        <!-- CHART -->
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+          <div class="chart-container">
+            <canvas id="scoreChart"></canvas>
           </div>
           <div class="bg-gradient-to-r from-brand-primary/10 to-brand-accent/10 rounded-3xl p-8 border border-brand-primary/20">
             <h3 class="text-2xl font-bold text-gray-900 mb-6">Your Risk Assessment</h3>
@@ -84,9 +115,9 @@
         </div>
       </div>
 
-      <!-- ROUNDS BREAKDOWN -->
+      <!-- DETAILED AI EXPLANATION -->
       <div class="grid xl:grid-cols-2 gap-12">
-        <!-- Round 1 -->
+        <!-- ROUND 1 BREAKDOWN -->
         <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 hover:shadow-3xl transition-all duration-500">
           <div class="flex items-center gap-6 mb-10">
             <div class="w-16 h-16 bg-gradient-to-r from-orange-400 to-orange-500 rounded-3xl flex items-center justify-center shadow-xl">
@@ -97,10 +128,10 @@
               <div class="text-lg font-semibold text-orange-600 bg-orange-100/80 px-6 py-2 rounded-2xl inline-block shadow-md">10 Questions / 50 Points</div>
             </div>
           </div>
-          <div id="round1Details" class="space-y-4 text-gray-700"></div>
+          <div id="round1Details" class="space-y-4 text-gray-700 text-lg"></div>
         </div>
 
-        <!-- Round 2 -->
+        <!-- ROUND 2 BREAKDOWN -->
         <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10 hover:shadow-3xl transition-all duration-500">
           <div class="flex items-center gap-6 mb-10">
             <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl">
@@ -111,25 +142,25 @@
               <div class="text-lg font-semibold text-purple-600 bg-purple-100/80 px-6 py-2 rounded-2xl inline-block shadow-md">7 Questions / 50 Points</div>
             </div>
           </div>
-          <div id="round2Details" class="space-y-4 text-gray-700"></div>
+          <div id="round2Details" class="space-y-4 text-gray-700 text-lg"></div>
         </div>
       </div>
 
       <!-- TOTAL/100 INSIGHTS -->
       <div class="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-3xl p-12 border border-emerald-100 shadow-2xl">
         <h2 class="text-4xl font-black text-emerald-900 mb-10 flex items-center gap-4">
-          <span class="text-5xl">🎯</span> TOTAL/100 Insights
+          <span class="text-5xl">🤖</span> Explainable AI Analysis
         </h2>
-        <div id="insights" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="aiExplanation" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
       </div>
 
       <!-- ACTION BUTTONS -->
       <div class="grid md:grid-cols-2 gap-6 pt-12 border-t border-gray-200">
-        <a href="round1.html" class="group bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-8 px-12 rounded-3xl text-xl text-center transition-all duration-500 transform hover:-translate-y-2 shadow-2xl group-hover:shadow-3xl">
+        <a href="round1.html" class="group bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-8 px-12 rounded-3xl text-xl text-center transition-all duration-500 transform hover:-translate-y-2 shadow-2xl">
           🔄 New Assessment
           <span class="block text-sm opacity-75 group-hover:opacity-100 mt-1">Restart for updated results</span>
         </a>
-        <a href="dashboard.html" class="group bg-gradient-to-r from-brand-primary to-brand-accent hover:from-brand-accent-hover hover:to-brand-primary-hover text-white font-bold py-8 px-12 rounded-3xl text-xl text-center transition-all duration-500 transform hover:-translate-y-2 shadow-2xl group-hover:shadow-3xl">
+        <a href="dashboard.html" class="group bg-gradient-to-r from-brand-primary to-brand-accent hover:from-brand-accent-hover hover:to-brand-primary-hover text-white font-bold py-8 px-12 rounded-3xl text-xl text-center transition-all duration-500 transform hover:-translate-y-2 shadow-2xl">
           📊 View History
           <span class="block text-sm opacity-75 group-hover:opacity-100 mt-1">All your past assessments</span>
         </a>
@@ -138,55 +169,40 @@
   </div>
 
   <script>
-    // AUTH CHECK
-    if (!localStorage.getItem('mindwellToken')) {
-      window.location.href = 'login.html';
-    }
-
-    // TOTAL/100 RISK LEVELS
+    // ✅ NEW RISK LEVELS: <50=NORMAL, 50-80=MODERATE, >80=RISKY
     const riskLevels = {
       normal: { 
-        badge: '✅ LOW RISK (0-34)', 
-        color: 'from-green-400 to-green-600', 
-        desc: 'Excellent mental wellness! Your habits support emotional balance.',
-        insights: ['🟢 Healthy sleep patterns', '🟢 Strong social support', '🟢 Regular physical activity']
+        badge: '✅ NORMAL (<50)', color: 'from-green-400 to-green-600', 
+        desc: 'Excellent! 🟢 Your mental wellness is strong. Continue current habits.',
+        insights: ['🟢 Healthy sleep patterns (7-9 hours)', '🟢 Strong focus & productivity', '🟢 Good social support system', '🟢 Balanced appetite & energy levels', '🟢 Regular physical activity maintained'],
+        r1: ['✅ Good sleep quality', '✅ Healthy daily habits', '✅ Strong focus ability'],
+        r2: ['✅ Minimal physical symptoms', '✅ Positive emotional state', '✅ Good coping resources']
       },
       moderate: { 
-        badge: '⚠️ MODERATE (35-66)', 
-        color: 'from-yellow-400 to-orange-600', 
-        desc: 'Room for improvement. Wellness practices can help maintain balance.',
-        insights: ['🟡 Some sleep challenges', '🟡 Occasional stress spikes', '🟡 Monitor energy levels']
+        badge: '⚠️ MODERATE (50-80)', color: 'from-yellow-400 to-orange-600',
+        desc: 'Monitor & improve. 🟡 Some areas need attention. Small changes help.',
+        insights: ['🟡 Sleep could be more consistent', '🟡 Occasional focus challenges', '🟡 Stress management needed', '🟡 Energy levels variable', '🟡 Increase social connection'],
+        r1: ['⚠️ Inconsistent sleep patterns', '⚠️ Occasional stress spikes', '⚠️ Variable focus levels'],
+        r2: ['⚠️ Some physical symptoms', '⚠️ Moderate emotional challenges', '⚠️ Coping strategies needed']
       },
       high: { 
-        badge: '🚨 HIGH RISK (67+)', 
-        color: 'from-red-400 to-red-600', 
-        desc: 'Professional support recommended. You deserve care and help.',
-        insights: ['🔴 Persistent sleep issues', '🔴 Elevated stress levels', '🔴 Limited coping resources']
+        badge: '🚨 RISKY (>80)', color: 'from-red-400 to-red-600',
+        desc: 'Urgent action needed. 🔴 Seek professional support immediately.',
+        insights: ['🔴 Poor sleep (<6 hours consistently)', '🔴 High stress & overwhelm', '🔴 Low energy & motivation', '🔴 Social isolation risk', '🔴 Professional help recommended'],
+        r1: ['🚨 Poor sleep quality', '🚨 High daily stress', '🚨 Low focus & productivity'],
+        r2: ['🚨 Significant physical symptoms', '🚨 Serious emotional distress', '🚨 Limited coping resources']
       }
     };
 
-    // LOAD RESULTS - PRIORITY: finalResult → latestAssessment → Backend
+    let chart = null;
+
     async function loadResults() {
-      console.log('🔍 LOADING TOTAL/100 RESULTS...');
-      
-      // 1. CHECK FINAL RESULT (Round1+Round2 combined)
       let finalResult = localStorage.getItem('finalResult');
       if (finalResult) {
-        console.log('✅ FOUND finalResult');
         displayResults(JSON.parse(finalResult));
         return;
       }
 
-      // 2. CHECK LATEST ASSESSMENT
-      let latestAssessment = localStorage.getItem('latestAssessment');
-      if (latestAssessment) {
-        console.log('✅ FOUND latestAssessment');
-        const data = JSON.parse(latestAssessment);
-        displayResults({ total_score: data.score, risk_level: data.risk_level, round1_score: data.round1_score || 0, round2_score: data.round2_score || 0 });
-        return;
-      }
-
-      // 3. FETCH FROM BACKEND
       try {
         const token = localStorage.getItem('mindwellToken');
         const response = await fetch('http://localhost:5000/api/assessments', {
@@ -197,59 +213,87 @@
           const assessments = await response.json();
           const latest = assessments[0];
           if (latest) {
-            console.log('✅ BACKEND DATA:', latest);
             displayResults(latest);
             return;
           }
         }
       } catch (error) {
-        console.log('⚠️ Backend unavailable, using local data');
+        console.log('Using local fallback');
       }
 
-      // 4. NO DATA
-      alert('No results found. Complete both Round 1 & 2 first!');
+      alert('Complete both rounds first!');
       window.location.href = 'round1.html';
     }
 
     function displayResults(data) {
-      console.log('📊 DISPLAYING:', data);
       document.getElementById('loadingScreen').classList.add('hidden');
       document.getElementById('resultsContent').classList.remove('hidden');
 
-      const risk = riskLevels[data.risk_level || 'normal'];
-      
-      // TOTAL SCORE CARD
+      const totalScore = data.total_score || data.score || 0;
+      const round1Score = data.round1_score || 25;
+      const round2Score = data.round2_score || 25;
+      const riskKey = totalScore < 50 ? 'normal' : totalScore <= 80 ? 'moderate' : 'high';
+      const risk = riskLevels[riskKey];
+
+      // TOTAL BADGE & SCORE
       document.getElementById('totalBadge').innerHTML = 
-        `<div class="bg-gradient-to-r ${risk.color} text-white px-8 py-4 rounded-3xl font-black text-xl shadow-2xl"> ${risk.badge} </div>`;
-      document.getElementById('totalScore').textContent = data.total_score || data.score || '-';
-      document.getElementById('round1Score').textContent = data.round1_score || data.score || '-';
-      document.getElementById('round2Score').textContent = data.round2_score || '-';
-      document.getElementById('riskDescription').textContent = risk.desc;
+        `<div class="bg-gradient-to-r ${risk.color} text-white px-8 py-4 rounded-3xl font-black text-xl shadow-2xl ${riskKey === 'normal' ? 'normal-glow' : ''}"> ${risk.badge} </div>`;
+      document.getElementById('totalScoreEl').innerHTML = `<span class="text-${riskKey === 'normal' ? 'green' : riskKey === 'moderate' ? 'orange' : 'red'}-600">${totalScore}</span>/100`;
 
-      // ROUND DETAILS (SIMPLIFIED)
-      document.getElementById('round1Details').innerHTML = `
-        <div class="bg-gradient-to-r from-orange-50 to-orange-100 rounded-2xl p-8 text-center">
-          <div class="text-4xl font-black text-orange-600 mb-2">${data.round1_score || data.score || '-'}</div>
-          <div class="text-xl font-bold text-gray-800">Round 1 Score /50</div>
-          <div class="text-sm text-orange-700 mt-2">Daily habits & stress patterns</div>
-        </div>
-      `;
+      // ROUND SCORES
+      document.getElementById('round1ScoreEl').textContent = Math.round(round1Score);
+      document.getElementById('round2ScoreEl').textContent = Math.round(round2Score);
+      
+      document.getElementById('riskDescription').innerHTML = `<strong>${risk.desc}</strong>`;
 
-      document.getElementById('round2Details').innerHTML = `
-        <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl p-8 text-center">
-          <div class="text-4xl font-black text-purple-600 mb-2">${data.round2_score || '-'}</div>
-          <div class="text-xl font-bold text-gray-800">Round 2 Score /50</div>
-          <div class="text-sm text-purple-700 mt-2">Symptoms & coping resources</div>
-        </div>
-      `;
+      // CHART
+      const ctx = document.getElementById('scoreChart').getContext('2d');
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Round 1 (Daily Habits)', 'Round 2 (Symptoms)'],
+          datasets: [{
+            data: [round1Score, round2Score],
+            backgroundColor: ['#f59e0b', '#7c3aed'],
+            borderWidth: 0,
+            cutout: '60%'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { position: 'bottom', labels: { padding: 30, font: { size: 14 } } }
+          }
+        }
+      });
 
-      // INSIGHTS
-      document.getElementById('insights').innerHTML = risk.insights
-        .map(insight => `<div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-green-400 hover:shadow-xl transition-all">${insight}</div>`)
+      // ROUND DETAILS
+      document.getElementById('round1Details').innerHTML = risk.r1.map(item => 
+        `<div class="flex items-start gap-3 p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-2xl border-l-4 border-orange-400 hover:shadow-md transition-all">
+          <span class="text-xl mt-1 flex-shrink-0">${item.startsWith('✅') || item.startsWith('⚠️') || item.startsWith('🚨') ? '' : '📋'}</span>
+          <span>${item}</span>
+        </div>`
+      ).join('');
+      
+      document.getElementById('round2Details').innerHTML = risk.r2.map(item => 
+        `<div class="flex items-start gap-3 p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl border-l-4 border-purple-400 hover:shadow-md transition-all">
+          <span class="text-xl mt-1 flex-shrink-0">${item.startsWith('✅') || item.startsWith('⚠️') || item.startsWith('🚨') ? '' : '📋'}</span>
+          <span>${item}</span>
+        </div>`
+      ).join('');
+
+      // AI EXPLANATION
+      document.getElementById('aiExplanation').innerHTML = risk.insights
+        .map(item => `<div class="bg-white p-6 rounded-2xl shadow-lg border-l-8 ${riskKey === 'normal' ? 'border-green-500' : riskKey === 'moderate' ? 'border-yellow-500' : 'border-red-500'} hover:shadow-xl transition-all">${item}</div>`)
         .join('');
     }
 
-    // START
+    // AUTH CHECK + START
+    if (!localStorage.getItem('mindwellToken')) {
+      window.location.href = 'login.html';
+    }
     window.addEventListener('load', loadResults);
   </script>
 </body>

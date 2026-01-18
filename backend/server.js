@@ -154,7 +154,7 @@ app.post('/api/assessments/complete', authenticateToken, async (req, res) => {
 
     // 🎯 TOTAL /100 & RISK LEVEL
     const total_score = Math.round(round1_score + round2_score);
-    const risk_level = total_score < 35 ? 'normal' : total_score < 67 ? 'moderate' : 'high';
+    const risk_level = total_score < 50 ? 'normal' : total_score <= 80 ? 'moderate' : 'high';
 
     // 💾 SAVE COMPLETE ASSESSMENT (round_number = 3)
     const [result] = await pool.execute(

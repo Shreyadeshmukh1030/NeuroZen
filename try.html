@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Round 1 Assessment | TOTAL/100 SCORING READY</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Brand Colors & Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-primary': '#6366f1',
+            'brand-primary-hover': '#4f46e5',
+            'brand-accent': '#7c3aed',
+            'brand-accent-hover': '#6d28d9',
+            'brand-light': '#e0e7ff',
+            'brand-dark': '#312e81',
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            'xl-soft': '0 20px 25px -5px rgba(99,102,241,0.15), 0 10px 10px -5px rgba(124,58,237,0.1)',
+            'glow': '0 0 20px rgba(99,102,241,0.3)',
+          },
+          transitionProperty: {
+            'width': 'width',
+            'spacing': 'margin, padding',
+            'colors': 'background-color, border-color, color, fill, stroke',
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+            'bounce-subtle': 'bounceSubtle 2s infinite',
+            'pulse-soft': 'pulseSoft 3s infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.8' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 50%, #ede9fe 100%);
+      background-attachment: fixed;
+    }
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.1);
+      animation: float 10s infinite ease-in-out;
+    }
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    .shape:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      top: 50%;
+      left: 80%;
+      animation-delay: 2s;
+    }
+    .shape:nth-child(3) {
+      width: 100px;
+      height: 100px;
+      top: 80%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    .progress-glow {
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+    .option-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .option-hover:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+    }
+    .selected-option {
+      animation: slide-up 0.4s ease-out;
+    }
+    .question-transition {
+      animation: fade-in 0.6s ease-out;
+    }
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8 font-sans relative overflow-hidden">
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
+
+    <!-- Left: Assessment Form -->
+    <div class="lg:col-span-2 bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl-soft border border-gray-200/50 p-8 md:p-12 lg:p-16 transition-all duration-500 hover:shadow-glow relative overflow-hidden">
+      <!-- Subtle inner glow -->
+      <div class="absolute inset-0 bg-gradient-to-br from-brand-light/20 to-brand-accent/10 rounded-3xl pointer-events-none"></div>
+      
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-12 select-none relative z-10">
+        <span id="stepText" class="text-sm font-bold text-brand-dark uppercase tracking-widest bg-brand-light/50 px-3 py-1 rounded-full"></span>
+        <div class="w-2/3 h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+          <div id="progressBar" class="h-3 bg-gradient-to-r from-brand-primary via-brand-accent to-purple-500 rounded-full transition-all duration-700 ease-out progress-glow"></div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <h2 id="questionText" class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-12 leading-tight tracking-tight question-transition relative z-10"></h2>
+
+      <!-- Options -->
+      <form id="questionForm" class="space-y-6 relative z-10">
+        <div id="optionsContainer" class="space-y-4"></div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center mt-16">
+          <button type="button" id="backBtn" class="text-gray-600 font-semibold hover:text-brand-primary disabled:opacity-30 transition-all duration-300 px-6 py-3 rounded-xl select-none flex items-center gap-2 group">
+            <span class="text-2xl leading-none group-hover:animate-bounce-subtle">⬅️</span> Back
+          </button>
+          <button type="submit" id="nextBtn" class="bg-gradient-to-r from-brand-primary to-brand-accent text-white px-12 py-4 rounded-2xl font-bold shadow-lg hover:from-brand-accent-hover hover:to-brand-primary-hover transition-all duration-300 transform hover:-translate-y-1 hover:shadow-glow select-none focus:ring-4 focus:ring-brand-primary/50 active:scale-95 disabled:opacity-50 disabled:transform-none flex items-center gap-2">
+            <span id="nextIcon">➡️</span>
+            <span id="nextText">Continue</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right: Tips & Quotes -->
+    <aside class="hidden lg:flex flex-col bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl-soft border border-gray-200/50 p-8 sticky top-16 max-h-[80vh] overflow-y-auto relative">
+      <!-- Subtle inner gradient -->
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-light/30 to-transparent rounded-3xl pointer-events-none"></div>
+      
+      <!-- Quote -->
+      <div class="mb-12 flex-grow flex flex-col justify-center items-center px-6 text-center relative z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-brand-primary mb-6 animate-pulse-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.17 8A3.001 3.001 0 008 15h0a3 3 0 002.83-4H7.17zM4.5 12a4.5 4.5 0 014.5-4.5M19.5 12a4.5 4.5 0 00-4.5-4.5" />
+        </svg>
+        <p id="healthQuote" class="text-xl italic font-semibold text-brand-dark leading-relaxed fade-in"></p>
+      </div>
+
+      <!-- Wellness Tips -->
+      <div class="relative z-10">
+        <h3 class="text-2xl font-extrabold text-brand-dark mb-8 border-b-2 border-brand-primary/30 pb-3">Round 1 of 2 ✅</h3>
+        <ul class="space-y-6 text-brand-dark text-lg">
+          <li class="flex items-start gap-4 group">
+            <span class="text-3xl animate-bounce-subtle mt-1 group-hover:scale-110 transition-transform">📱</span>
+            <span class="group-hover:text-brand-primary transition-colors">Saved locally - no backend call</span>
+          </li>
+          <li class="flex items-start gap-4 group">
+            <span class="text-3xl animate-bounce-subtle delay-150 mt-1 group-hover:scale-110 transition-transform">⚡</span>
+            <span class="group-hover:text-brand-primary transition-colors">Max 50 points (higher = more stress)</span>
+          </li>
+          <li class="flex items-start gap-4 group">
+            <span class="text-3xl animate-bounce-subtle delay-300 mt-1 group-hover:scale-110 transition-transform">➕</span>
+            <span class="group-hover:text-brand-primary transition-colors">Combines with Round 2 = TOTAL/100</span>
+          </li>
+          <li class="flex items-start gap-4 group">
+            <span class="text-3xl animate-bounce-subtle delay-450 mt-1 group-hover:scale-110 transition-transform">🎯</span>
+            <span class="group-hover:text-brand-primary transition-colors">Backend calculates at Round 2 finish</span>
+          </li>
+        </ul>
+      </div>
+
+      <footer class="mt-auto text-center text-sm text-brand-dark/70 mt-12 px-4 relative z-10">
+        💚 Next: Round 2 → TOTAL/100 Results!
+      </footer>
+    </aside>
+  </div>
+
+  <script>
+    // AUTH CHECK - REDIRECT IF NOT LOGGED IN
+    if (!localStorage.getItem('mindwellToken')) {
+      alert('Please login first');
+      window.location.href = 'login.html';
+    }
+
+    /* ---------------- QUESTIONS ---------------- */
+    const questions = [
+      { id: 'q1', text: '🛌 How often do you wake up feeling low?', type: 'scale', labels: {1: 'Never', 5: 'Always'} },
+      { id: 'q2', text: '😴 Hours of sleep per night?', type: 'number', min: 0, max: 12 },
+      { id: 'q3', text: '🎨 Lose interest in hobbies?', type: 'scale', labels: {1: 'Never', 5: 'Always'} },
+      { id: 'q4', text: '📚 Stay focused?', type: 'scale', labels: {1: 'Never', 5: 'Always'} },
+      { id: 'q5', text: '🤝 Feel supported?', type: 'select', options: ['Yes, definitely', 'Somewhat', 'No, not really'] },
+      { id: 'q6', text: '⚡ Tasks overwhelming?', type: 'scale', labels: {1: 'Never', 5: 'Always'} },
+      { id: 'q7', text: '🍽️ Appetite change?', type: 'select', options: ['Normal', 'Poor', 'Overeating'] },
+      { id: 'q8', text: '🔋 Feel tired?', type: 'select', options: ['Rarely', 'Sometimes', 'Often', 'Constantly'] },
+      { id: 'q9', text: '🏃 Weekly activity?', type: 'select', options: ['Daily', '3-4 times/week', '1-2 times/week', 'Rarely'] },
+      { id: 'q10', text: '🧠 Mental health today?', type: 'scale', labels: {1: 'Very poor', 5: 'Excellent'} },
+    ];
+
+    /* ---------------- STATE ---------------- */
+    let currentStep = 0;
+    let answers = {};
+
+    /* ---------------- DOM ---------------- */
+    const questionText = document.getElementById("questionText");
+    const optionsContainer = document.getElementById("optionsContainer");
+    const stepText = document.getElementById("stepText");
+    const progressBar = document.getElementById("progressBar");
+    const backBtn = document.getElementById("backBtn");
+    const form = document.getElementById("questionForm");
+    const healthQuote = document.getElementById("healthQuote");
+    const nextBtn = document.getElementById("nextBtn");
+    const nextIcon = document.getElementById("nextIcon");
+    const nextText = document.getElementById("nextText");
+
+    /* ---------------- QUOTES ---------------- */
+    const quotes = [
+      "Your mental health matters just as much as your physical health.",
+      "Healing is not linear — be kind to yourself.",
+      "Small steps every day lead to meaningful change.",
+      "It's okay to slow down. You are not falling behind.",
+      "Taking care of your mind is a form of strength."
+    ];
+
+    function showRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      healthQuote.innerText = `"${quotes[randomIndex]}"`;
+      healthQuote.classList.remove("fade-in");
+      void healthQuote.offsetWidth;
+      healthQuote.classList.add("fade-in");
+    }
+
+    /* ---------------- RENDER ---------------- */
+    function renderQuestion() {
+      const q = questions[currentStep];
+      stepText.innerText = `Question ${currentStep + 1} / ${questions.length}`;
+      const progress = ((currentStep + 1) / questions.length) * 100;
+      progressBar.style.width = progress + "%";
+
+      questionText.classList.remove("question-transition");
+      setTimeout(() => {
+        questionText.innerText = q.text;
+        questionText.classList.add("question-transition");
+      }, 100);
+
+      optionsContainer.innerHTML = "";
+      backBtn.disabled = currentStep === 0;
+      nextBtn.disabled = false;
+      nextText.innerText = currentStep === questions.length - 1 ? "Finish Round 1" : "Continue";
+      nextIcon.innerText = currentStep === questions.length - 1 ? "✅" : "➡️";
+
+      // Scale (1-5)
+      if (q.type === "scale") {
+        for (let i = 1; i <= 5; i++) {
+          const selected = answers[q.id] == i;
+          optionsContainer.innerHTML += `
+            <label class="group block border-2 p-6 rounded-2xl cursor-pointer transition-all option-hover ${selected ? 'bg-gradient-to-r from-brand-primary to-brand-accent text-white shadow-xl scale-105 selected-option' : 'bg-white border-gray-200 hover:border-brand-primary/60'}">
+              <div class="flex items-center">
+                <input type="radio" name="${q.id}" hidden value="${i}" ${selected ? 'checked' : ''} />
+                <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center ${selected ? 'border-white bg-white/20' : 'border-gray-300'} transition-all">
+                  ${selected ? '<svg class="w-6 h-6 text-brand-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' : `<span class="text-lg font-bold text-gray-600">${i}</span>`}
+                </div>
+                <div class="ml-6">
+                  <span class="block font-bold text-xl">${i}</span>
+                  <span class="text-sm opacity-90">${q.labels?.[i] || (i === 1 ? 'Never / Very Low' : i === 5 ? 'Always / Very High' : '')}</span>
+                </div>
+              </div>
+            </label>
+          `;
+        }
+      }
+
+      // Select options
+      if (q.type === "select") {
+        q.options.forEach(opt => {
+          const selected = answers[q.id] === opt;
+          optionsContainer.innerHTML += `
+            <label class="group block border-2 p-6 rounded-2xl cursor-pointer transition-all option-hover ${selected ? 'bg-gradient-to-r from-brand-primary to-brand-accent text-white shadow-xl scale-105 selected-option' : 'bg-white border-gray-200 hover:border-brand-primary/60'}

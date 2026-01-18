@@ -23,19 +23,50 @@
       }
     }
   </script>
+
+  <!-- Fade Animation -->
+  <style>
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .animate-fade-left {
+      animation: fadeInLeft 0.8s ease-out forwards;
+    }
+  </style>
+
 </head>
 
 <body class="bg-white font-sans text-gray-800">
 
   <div class="min-h-screen flex">
 
-    <!-- LEFT PANEL -->
-    <div class="hidden lg:flex w-1/2 bg-brand-sidebar items-center justify-center p-12">
+    <!-- LEFT IMAGE PANEL -->
+    <div class="hidden lg:flex w-1/2 relative overflow-hidden items-center justify-center animate-fade-left">
 
-      <div class="text-center">
+      <!-- Background Image -->
+      <img 
+        src="./../frontend/images/registerimage.png"
+        alt="Mental Wellness"
+        class="absolute inset-0 w-full h-full object-cover"
+      >
+
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-brand-primary/30"></div>
+
+      <!-- Content -->
+      <div class="relative z-10 text-center p-12">
 
         <div
-          class="w-16 h-16 bg-brand-primary rounded-2xl mx-auto mb-6 shadow-xl flex items-center justify-center text-white">
+          class="w-16 h-16 bg-white/90 rounded-2xl mx-auto mb-6 shadow-xl flex items-center justify-center text-brand-primary">
 
           <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -44,8 +75,8 @@
 
         </div>
 
-        <h2 class="text-4xl font-bold mb-3">Join MindWell</h2>
-        <p class="text-gray-500">Create your secure mental wellness account</p>
+        <h2 class="text-4xl font-bold mb-3 text-white">Join MindCare</h2>
+        <p class="text-white/80">Create your secure mental wellness account</p>
 
       </div>
 
@@ -123,7 +154,6 @@
 
     const API_URL = "http://localhost:5000/api/auth/register";
 
-    // Redirect if already logged in
     if (localStorage.getItem("mindwellToken")) {
       window.location.href = "dashboard.html";
     }
@@ -143,9 +173,7 @@
 
         const res = await fetch(API_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
 
@@ -155,7 +183,6 @@
           throw new Error(data.message || "Registration failed");
         }
 
-        // Save auth session
         localStorage.setItem("mindwellToken", data.token);
         localStorage.setItem("mindwellUser", JSON.stringify(data.user));
 

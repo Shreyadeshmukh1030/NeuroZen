@@ -11,105 +11,423 @@
       theme: {
         extend: {
           colors: {
-            'brand-primary': '#6366f1',
-            'brand-primary-hover': '#4f46e5',
-            'brand-accent': '#7c3aed',
-            'brand-accent-hover': '#6d28d9',
+            'brand-primary': '#3b82f6',
+            'brand-secondary': '#06b6d4',
+            'brand-accent': '#ec4899',
+            'neutral-dark': '#0f172a',
+            'neutral-light': '#f8fafc',
+            'neutral-border': '#e2e8f0',
           },
           fontFamily: {
             sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
           },
           boxShadow: {
-            'xl-soft': '0 20px 25px -5px rgba(99,102,241,0.15), 0 10px 10px -5px rgba(124,58,237,0.1)',
+            'sm-light': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+            'md-light': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+            'lg-light': '0 10px 15px -3px rgba(0, 0, 0, 0.08)',
           },
           transitionProperty: {
             'width': 'width',
             'spacing': 'margin, padding',
             'colors': 'background-color, border-color, color, fill, stroke',
-          }
+          },
         },
       },
     }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <style>
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
+    * {
+      font-family: 'Inter', ui-sans-serif;
     }
-    #progressBar {
-      animation: pulse 2s infinite;
+
+    body {
+      background: #ffffff;
+      overflow-x: hidden;
     }
-    .fade-in {
-      animation: fadeIn 1.2s ease forwards;
-      opacity: 0;
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3f4f6 50%, #ede9fe 100%);
+      z-index: -1;
+      pointer-events: none;
     }
-    @keyframes fadeIn {
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
       to {
         opacity: 1;
+        transform: translateY(0);
       }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse-smooth {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.5); }
+      50% { box-shadow: 0 0 40px rgba(99,102,241,0.8); }
+    }
+
+    .slide-in-up {
+      animation: slideInUp 0.6s ease-out forwards;
+    }
+
+    .slide-in-down {
+      animation: slideInDown 0.5s ease-out forwards;
+    }
+
+    #progressBar {
+      animation: pulse-smooth 2s ease-in-out infinite;
+    }
+
+    .fade-in {
+      animation: slideInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .glow-pulse {
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    .option-hover {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-hover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    .progress-background {
+      background: linear-gradient(90deg, rgba(99,102,241,0.1), rgba(124,58,237,0.1));
+    }
+
+    .glass-effect {
+      background: #ffffff;
+      backdrop-filter: blur(10px);
+      border: 1px solid #e2e8f0;
+    }
+
+    .card-shadow {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .smooth-transition {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Navigation Styles */
+    .navbar {
+      background: #ffffff;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-item {
+      position: relative;
+      padding: 0.6rem 1.1rem;
+      border-radius: 0.65rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #64748b;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .nav-item:hover {
+      background-color: #f1f5f9;
+      color: #3b82f6;
+    }
+
+    .nav-item.active {
+      background-color: #eff6ff;
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 1.1rem;
+      right: 1.1rem;
+      height: 2px;
+      background: #3b82f6;
+      border-radius: 1px;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      background-color: #f1f5f9;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      color: #64748b;
+    }
+
+    .mobile-menu-toggle:hover {
+      background-color: #e2e8f0;
+      color: #3b82f6;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: flex;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid #e2e8f0;
+        flex-direction: column;
+        padding: 0.8rem;
+        gap: 0.4rem;
+        display: none;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-item {
+        padding: 0.7rem 1rem;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .nav-item.active::after {
+        display: none;
+      }
+
+      .nav-item.active {
+        background: #eff6ff;
+        color: #3b82f6;
+      }
+    }
+
+    .user-avatar {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+    }
+
+    .user-avatar:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
     }
   </style>
 </head>
 
-<body class="bg-gradient-to-br from-indigo-100 via-white to-purple-100 min-h-screen flex items-center justify-center p-8 font-sans">
-  <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-12">
+<body class="min-h-screen flex flex-col font-sans">
+  <!-- Navigation Bar -->
+  <nav class="navbar sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto w-full px-4 md:px-8 py-4 flex items-center justify-between">
+      <!-- Logo -->
+     <div class="flex items-center gap-2">
+      <div class="w-9 h-9 bg-brand-primary text-white flex items-center justify-center rounded-lg font-bold">♡</div>
+      <span class="font-bold text-lg">MindCare</span>
+    </div>
+
+      <!-- Navigation Menu -->
+      <div class="nav-menu flex items-center gap-2 md:gap-1">
+        <a href="#dashboard" class="nav-item active" data-page="dashboard">
+          <span>📊</span>
+          <span class="hidden md:inline">Dashboard</span>
+        </a>
+        <a href="#chat" class="nav-item" data-page="chat">
+          <span>💬</span>
+          <span class="hidden md:inline">Chat Assistant</span>
+        </a>
+        <a href="#doctor" class="nav-item" data-page="doctor">
+          <span>👨‍⚕️</span>
+          <span class="hidden md:inline">Doctor Consult</span>
+        </a>
+        <a href="#report" class="nav-item" data-page="report">
+          <span>📋</span>
+          <span class="hidden md:inline">Report</span>
+        </a>
+        <a href="#profile" class="nav-item" data-page="profile">
+          <span>👤</span>
+          <span class="hidden md:inline">Profile</span>
+        </a>
+      </div>
+
+      <!-- Right Section: User & Logout -->
+      <div class="flex items-center gap-4">
+        
+        <button class="nav-item" id="logoutBtn" onclick="handleLogout()">
+          <span>🚪</span>
+          <span class="hidden md:inline">Logout</span>
+        </button>
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-1 min-h-screen flex items-center justify-center p-6 md:p-8 font-sans">
+  <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 slide-in-up">
 
     <!-- Left: Assessment Form -->
-    <div class="lg:col-span-2 bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl-soft border border-gray-200 p-10 md:p-16 transition-shadow duration-300 hover:shadow-2xl">
+    <div class="lg:col-span-2 glass-effect rounded-xl card-shadow border p-8 md:p-10">
       <!-- Header -->
-      <div class="flex items-center justify-between mb-10 select-none">
-        <span id="stepText" class="text-sm font-semibold text-gray-500 uppercase tracking-widest"></span>
-        <div class="w-1/3 h-2 bg-gray-200 rounded-full overflow-hidden shadow-inner">
-          <div id="progressBar" class="h-2 bg-gradient-to-r from-brand-primary to-brand-accent rounded-full transition-width duration-500 ease-in-out"></div>
+      <div class="flex items-center justify-between mb-12 select-none">
+        <div>
+          <span id="stepText" class="text-xs font-semibold text-brand-primary uppercase tracking-wider block mb-1"></span>
+          <span class="text-sm text-slate-500 font-medium">Mental Health Assessment</span>
+        </div>
+        <div class="w-32 h-2 bg-slate-200 rounded-full overflow-hidden">
+          <div id="progressBar" class="h-2 bg-gradient-to-r from-brand-primary to-brand-secondary rounded-full transition-all duration-500 ease-out"></div>
         </div>
       </div>
 
       <!-- Question -->
-      <h2 id="questionText" class="text-4xl font-extrabold text-gray-900 mb-14 leading-tight tracking-tight transition-opacity duration-300"></h2>
+      <h2 id="questionText" class="text-2xl md:text-3xl font-bold text-neutral-dark mb-10 leading-tight transition-all duration-500 font-display"></h2>
 
       <!-- Options -->
       <form id="questionForm" class="space-y-8">
         <div id="optionsContainer" class="space-y-6"></div>
 
         <!-- Navigation Buttons -->
-        <div class="flex justify-between items-center mt-16">
-          <button type="button" id="backBtn" class="text-gray-600 font-semibold hover:text-gray-900 disabled:opacity-30 transition-colors duration-300 px-6 py-3 rounded-lg select-none flex items-center gap-2">
-            <span class="text-2xl leading-none">⬅️</span> Back
+        <div class="flex justify-between items-center mt-14 pt-8 border-t border-slate-200">
+          <button type="button" id="backBtn" class="group text-slate-600 font-medium hover:text-brand-primary disabled:opacity-30 transition-all duration-250 px-5 py-2.5 rounded-lg select-none flex items-center gap-2 hover:bg-slate-100 disabled:cursor-not-allowed">
+            <span class="text-lg leading-none transform group-hover:-translate-x-1 transition-transform duration-250">←</span> Back
           </button>
-          <button type="submit" id="nextBtn" class="bg-gradient-to-r from-brand-primary to-brand-accent text-white px-14 py-4 rounded-2xl font-bold shadow-lg hover:from-brand-accent-hover hover:to-brand-primary-hover transition-all duration-300 transform hover:-translate-y-1 select-none focus:ring-4 focus:ring-brand-primary/50 active:scale-95 disabled:opacity-50 disabled:transform-none">
-            Continue ➡️
+          <button type="submit" id="nextBtn" class="bg-brand-primary hover:bg-blue-600 active:bg-blue-700 text-white px-8 md:px-10 py-2.5 rounded-lg font-semibold transition-all duration-250 transform hover:shadow-md active:scale-95 select-none focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed">
+            Continue →
           </button>
         </div>
       </form>
     </div>
 
     <!-- Right: Tips & Quotes -->
-    <aside class="hidden lg:flex flex-col bg-white/70 backdrop-blur-lg rounded-3xl shadow-xl-soft border border-gray-200 p-8 sticky top-16 max-h-[80vh] overflow-y-auto">
+    <aside class="hidden lg:flex flex-col glass-effect rounded-xl card-shadow border p-8 sticky top-24 max-h-[75vh] overflow-y-auto">
       <!-- Quote -->
-      <div class="mb-10 flex-grow flex flex-col justify-center items-center px-6 text-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M7.17 8A3.001 3.001 0 008 15h0a3 3 0 002.83-4H7.17zM4.5 12a4.5 4.5 0 014.5-4.5M19.5 12a4.5 4.5 0 00-4.5-4.5" />
-        </svg>
-        <p id="healthQuote" class="text-xl italic font-semibold text-indigo-700 leading-relaxed fade-in"></p>
+      <div class="mb-10 flex-grow flex flex-col justify-center items-center px-4 text-center py-6">
+        <div class="mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-primary/60 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.17 8A3.001 3.001 0 008 15h0a3 3 0 002.83-4H7.17zM4.5 12a4.5 4.5 0 014.5-4.5M19.5 12a4.5 4.5 0 00-4.5-4.5" />
+          </svg>
+        </div>
+        <p id="healthQuote" class="text-base italic font-medium text-slate-700 leading-relaxed fade-in"></p>
       </div>
 
       <!-- Wellness Tips -->
-      <div>
-        <h3 class="text-2xl font-extrabold text-indigo-800 mb-6 border-b border-indigo-300 pb-2">Round 1 of 2 ✅</h3>
-        <ul class="space-y-5 text-indigo-700 text-lg">
-          <li class="flex items-start gap-4"><span class="text-3xl animate-bounce mt-1">📱</span><span>Saved locally - no backend call</span></li>
-          <li class="flex items-start gap-4"><span class="text-3xl animate-bounce delay-150 mt-1">⚡</span><span>Max 50 points (higher = more stress)</span></li>
-          <li class="flex items-start gap-4"><span class="text-3xl animate-bounce delay-300 mt-1">➕</span><span>Combines with Round 2 = TOTAL/100</span></li>
-          <li class="flex items-start gap-4"><span class="text-3xl animate-bounce delay-450 mt-1">🎯</span><span>Backend calculates at Round 2 finish</span></li>
+      <div class="bg-blue-50 rounded-lg p-6 border border-blue-100">
+        <div class="flex items-center gap-2 mb-5">
+          <div class="h-1.5 w-6 bg-brand-primary rounded-full"></div>
+          <h3 class="text-lg font-semibold text-slate-900">Assessment Info</h3>
+          <span class="text-xs font-semibold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full">Round 1 of 2</span>
+        </div>
+        <ul class="space-y-3">
+          <li class="flex items-start gap-3">
+            <span class="text-lg flex-shrink-0">📱</span>
+            <span class="text-slate-700 font-medium text-sm">Saved locally, no backend call</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-lg flex-shrink-0">⚡</span>
+            <span class="text-slate-700 font-medium text-sm">Max 50 points (higher = more stress)</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-lg flex-shrink-0">➕</span>
+            <span class="text-slate-700 font-medium text-sm">Combines with Round 2 = TOTAL/100</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-lg flex-shrink-0">🎯</span>
+            <span class="text-slate-700 font-medium text-sm">Backend calculates final score</span>
+          </li>
         </ul>
       </div>
 
-      <footer class="mt-auto text-center text-sm text-indigo-600 opacity-70 mt-10 px-4">
-        💚 Next: Round 2 → TOTAL/100 Results!
+      <footer class="mt-auto text-center text-xs font-medium text-slate-500 mt-6 pt-5 border-t border-slate-200">
+        Next: Round 2 Assessment
       </footer>
     </aside>
   </div>
@@ -189,15 +507,15 @@
         for (let i = 1; i <= 5; i++) {
           const selected = answers[q.id] == i;
           optionsContainer.innerHTML += `
-            <label class="group block border-2 p-6 rounded-3xl cursor-pointer transition-all mb-6 ${selected ? 'bg-gradient-to-r from-brand-primary to-brand-accent text-white shadow-xl scale-[1.05]' : 'bg-white border-gray-200 hover:border-brand-primary/60 hover:scale-[1.03] hover:shadow-md'}">
-              <div class="flex items-center">
+            <label class="option-hover group block border p-4 md:p-5 rounded-lg cursor-pointer transition-all duration-250 mb-3 ${selected ? 'bg-blue-500 text-white shadow-md border-blue-600' : 'bg-slate-50 border-slate-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm'}">
+              <div class="flex items-center gap-4">
                 <input type="radio" name="${q.id}" hidden value="${i}" ${selected ? 'checked' : ''} />
-                <div class="w-10 h-10 rounded-full border-2 flex items-center justify-center ${selected ? 'border-white' : 'border-gray-300'}">
-                  ${selected ? '<div class="w-5 h-5 bg-white rounded-full"></div>' : ''}
+                <div class="w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold text-sm flex-shrink-0 ${selected ? 'border-white bg-white/20' : 'border-slate-300 bg-white group-hover:border-blue-400'}">
+                  ${selected ? '✓' : i}
                 </div>
-                <div class="ml-6">
-                  <span class="block font-extrabold text-2xl">${i}</span>
-                  <span class="text-sm opacity-90">${q.labels?.[i] || (i === 1 ? 'Never / Very Low' : i === 5 ? 'Always / Very High' : '')}</span>
+                <div class="flex-grow">
+                  <span class="block font-semibold">${i}</span>
+                  <span class="text-xs ${selected ? 'text-blue-100' : 'text-slate-600'}">${q.labels?.[i] || (i === 1 ? 'Never' : i === 5 ? 'Always' : '')}</span>
                 </div>
               </div>
             </label>
@@ -207,16 +525,16 @@
 
       // Select options
       if (q.type === "select") {
-        q.options.forEach(opt => {
+        q.options.forEach((opt, idx) => {
           const selected = answers[q.id] === opt;
           optionsContainer.innerHTML += `
-            <label class="group block border-2 p-6 rounded-3xl cursor-pointer transition-all mb-6 ${selected ? 'bg-gradient-to-r from-brand-primary to-brand-accent text-white shadow-xl scale-[1.05]' : 'bg-white border-gray-200 hover:border-brand-primary/60 hover:scale-[1.03] hover:shadow-md'}">
-              <div class="flex items-center">
+            <label class="option-hover group block border p-4 md:p-5 rounded-lg cursor-pointer transition-all duration-250 mb-3 ${selected ? 'bg-blue-500 text-white shadow-md border-blue-600' : 'bg-slate-50 border-slate-200 hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm'}">
+              <div class="flex items-center gap-4">
                 <input type="radio" name="${q.id}" hidden value="${opt}" ${selected ? 'checked' : ''} />
-                <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center ${selected ? 'border-white' : 'border-gray-300'}">
-                  ${selected ? '<div class="w-4 h-4 bg-white rounded-full"></div>' : ''}
+                <div class="w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold text-sm flex-shrink-0 ${selected ? 'border-white bg-white/20' : 'border-slate-300 bg-white group-hover:border-blue-400'}">
+                  ${selected ? '✓' : (idx + 1)}
                 </div>
-                <span class="ml-6 font-extrabold text-xl">${opt}</span>
+                <span class="font-semibold">${opt}</span>
               </div>
             </label>
           `;
@@ -226,7 +544,9 @@
       // Number input
       if (q.type === "number") {
         optionsContainer.innerHTML = `
-          <input type="number" min="${q.min}" max="${q.max}" required value="${answers[q.id] || ''}" id="numberInput" placeholder="Enter hours (0-12)..." class="block w-full border-2 border-gray-300 rounded-3xl p-8 text-2xl focus:ring-brand-primary focus:border-brand-primary outline-none transition-all hover:shadow-md text-center" />
+          <div class="relative">
+            <input type="number" min="${q.min}" max="${q.max}" required value="${answers[q.id] || ''}" id="numberInput" placeholder="Enter a value..." class="block w-full border border-slate-300 rounded-lg p-4 md:p-5 text-xl focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all duration-250 hover:border-slate-400 font-semibold bg-white" />
+          </div>
         `;
       }
 
@@ -273,7 +593,8 @@
 
       // ✅ NO BACKEND CALL - JUST LOCALSTORAGE
       nextBtn.disabled = true;
-      nextBtn.innerText = "💾 Saving Locally...";
+      const originalHTML = nextBtn.innerHTML;
+      nextBtn.innerHTML = '<span class="flex items-center gap-2"><span class="inline-block animate-spin">⏳</span> Saving...</span>';
 
       // Simulate save delay
       setTimeout(() => {
@@ -283,7 +604,7 @@
         }));
         console.log('💾 ROUND1 SAVED TO LOCALSTORAGE (10 questions ready for TOTAL/100)');
         
-        nextBtn.innerText = "✅ Saved! Going to Round 2...";
+        nextBtn.innerHTML = '<span class="flex items-center gap-2"><span>✓</span> Saved! Moving to Round 2...</span>';
         
         // SMOOTH REDIRECT TO ROUND2
         setTimeout(() => {
@@ -297,6 +618,89 @@
 
     /* ---------------- INIT ---------------- */
     renderQuestion();
+
+    // ==================== NAVIGATION FUNCTIONS ====================
+    
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+      const navMenu = document.querySelector('.nav-menu');
+      navMenu.classList.toggle('active');
+    }
+
+    // Handle navigation item clicks
+    document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const page = this.getAttribute('data-page');
+        handleNavigation(page);
+      });
+    });
+
+    // Main navigation handler
+    function handleNavigation(page) {
+      // Remove active class from all nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Add active class to clicked item
+      document.querySelector(`[data-page="${page}"]`).classList.add('active');
+      
+      // Close mobile menu
+      const navMenu = document.querySelector('.nav-menu');
+      navMenu.classList.remove('active');
+
+      // Navigate to page
+      const pages = {
+        'dashboard': '#dashboard',
+        'chat': 'chat-assistant.html',
+        'doctor': 'doctor-consult.html',
+        'report': 'report.html',
+        'profile': 'profile.html'
+      };
+
+      if (pages[page]) {
+        // Save current state before leaving
+        localStorage.setItem('currentPage', page);
+        // Redirect to page
+        window.location.href = pages[page];
+      }
+    }
+
+    // Handle logout
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('mindwellToken');
+        localStorage.removeItem('round1Result');
+        localStorage.removeItem('round2Result');
+        localStorage.removeItem('currentPage');
+        console.log('Logged out successfully');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // Restore active nav item on page load
+    function restoreNavState() {
+      const currentPage = localStorage.getItem('currentPage') || 'dashboard';
+      const navItem = document.querySelector(`[data-page="${currentPage}"]`);
+      if (navItem) {
+        navItem.classList.add('active');
+      }
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+      const navbar = document.querySelector('.navbar');
+      const navMenu = document.querySelector('.nav-menu');
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      
+      if (!navbar.contains(e.target) && navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Initialize navigation on page load
+    restoreNavState();
   </script>
 </body>
 </html>

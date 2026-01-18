@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>MindWell — Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Custom Theme -->
   <script>
     tailwind.config = {
       theme: {
@@ -24,33 +19,16 @@
     }
   </script>
 </head>
-
 <body class="min-h-screen flex bg-white text-gray-800 font-sans">
-
-  <!-- LEFT PANEL -->
-  <div class="hidden lg:flex w-1/2 bg-brand-sidebar items-center justify-center p-12">
-
-    <div class="text-center">
-
-      <div class="w-16 h-16 bg-brand-primary rounded-2xl mx-auto mb-6 shadow-xl flex items-center justify-center text-white">
-        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 21C7 17 4 14 4 10a4 4 0 018-1 4 4 0 018 1c0 4-3 7-8 11z" />
-        </svg>
-      </div>
-
-      <h2 class="text-4xl font-bold text-gray-900 mb-3">Welcome Back</h2>
-      <p class="text-gray-500">Secure access to your MindWell dashboard</p>
-
-    </div>
-
+  <!-- LEFT PANEL WITH IMAGE -->
+  <div class="hidden lg:flex w-1/2 relative overflow-hidden">
+    <img src="./../frontend/images/loginimage.png" alt="Mental Wellness" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-brand-primary/10"></div>
   </div>
 
   <!-- RIGHT PANEL -->
   <div class="flex-1 flex items-center justify-center px-6">
-
     <div class="w-full max-w-md space-y-8">
-
       <div>
         <h2 class="text-3xl font-bold">Sign in</h2>
         <p class="text-sm text-gray-500 mt-1">
@@ -59,45 +37,30 @@
         </p>
       </div>
 
-      <!-- FORM -->
       <form id="loginForm" class="space-y-5">
-
         <div>
           <label class="text-sm font-medium">Email</label>
-          <input id="email" type="email" required
-            class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-primary outline-none">
+          <input id="email" type="email" required class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-primary outline-none">
         </div>
-
         <div>
           <label class="text-sm font-medium">Password</label>
-          <input id="password" type="password" required
-            class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-primary outline-none">
+          <input id="password" type="password" required class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-brand-primary outline-none">
         </div>
-
-        <!-- ERROR MESSAGE -->
         <div id="errorBox" class="hidden bg-red-50 border border-red-200 p-3 rounded-lg">
           <p id="errorText" class="text-red-600 text-sm"></p>
         </div>
-
-        <button id="submitBtn" type="submit"
-          class="w-full py-3 bg-brand-primary hover:bg-brand-primary-hover text-white rounded-xl font-semibold transition">
+        <button id="submitBtn" type="submit" class="w-full py-3 bg-brand-primary hover:bg-brand-primary-hover text-white rounded-xl font-semibold transition">
           Sign In
         </button>
-
       </form>
-
     </div>
-
   </div>
 
-  <!-- SCRIPT -->
   <script>
-
     const form = document.getElementById("loginForm");
     const button = document.getElementById("submitBtn");
     const errorBox = document.getElementById("errorBox");
     const errorText = document.getElementById("errorText");
-
     const API_URL = "http://localhost:5000/api/auth/login";
 
     // AUTO REDIRECT IF ALREADY LOGGED IN
@@ -106,9 +69,7 @@
     }
 
     form.addEventListener("submit", async (e) => {
-
       e.preventDefault();
-
       errorBox.classList.add("hidden");
       button.disabled = true;
       button.innerText = "Authenticating...";
@@ -116,7 +77,6 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
 
-      // BASIC FRONTEND VALIDATION
       if (!email || !password) {
         showError("Please fill all fields");
         resetButton();
@@ -124,12 +84,9 @@
       }
 
       try {
-
         const res = await fetch(API_URL, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password })
         });
 
@@ -139,23 +96,21 @@
           throw new Error(data.message || "Login failed");
         }
 
-        // STORE AUTH DATA
+        // ✅ STORE COMPLETE USER DATA
         localStorage.setItem("mindwellToken", data.token);
         localStorage.setItem("mindwellUser", JSON.stringify(data.user));
-
-        // REDIRECT
-        window.location.href = "dashboard.html";
+        
+        // ✅ SHOW SUCCESS + REDIRECT
+        button.innerText = "Welcome! Redirecting...";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1200);
 
       } catch (err) {
-
         showError(err.message);
-
       } finally {
-
         resetButton();
-
       }
-
     });
 
     function showError(message) {
@@ -167,9 +122,6 @@
       button.disabled = false;
       button.innerText = "Sign In";
     }
-
   </script>
-
 </body>
-
 </html>

@@ -1,46 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Doctors Consultation</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>MindCare Doctors Consultation</title>
 
-  <!-- Custom Brand Colors -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            "brand-primary": "#6366F1",
-            "brand-primary-hover": "#4F46E5"
-          }
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom Tailwind Config -->
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        "brand-primary": "#6366F1",
+        "brand-primary-hover": "#4F46E5"
+      },
+      animation: {
+        fadeUp: "fadeUp 0.6s ease forwards",
+        float: "float 3s ease-in-out infinite"
+      },
+      keyframes: {
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" }
+        },
+        float: {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" }
         }
       }
     }
-  </script>
+  }
+}
+</script>
 
 </head>
-<body class="bg-gray-50">
 
-<!-- Dashboard Container -->
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen">
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+     <div class="flex items-center gap-2">
+      <div class="w-9 h-9 bg-brand-primary text-white flex items-center justify-center rounded-lg font-bold">♡</div>
+      <span class="font-bold text-lg">MindCare</span>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="hidden md:flex items-center gap-8">
+
+      <a href="dashboard.html" class="nav-item">Dashboard</a>
+      <a href="chat.html" class="nav-item">Chat Assistant</a>
+      <a href="results.html" class="nav-item">Reports</a>
+      <a href="profile.html" class="nav-item">Profile</a>
+
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden text-brand-primary text-xl">
+      ☰
+    </button>
+
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden flex-col bg-white border-t px-6 py-4 space-y-3 md:hidden">
+
+    <a href="#" class="nav-item">Dashboard</a>
+    <a href="#" class="nav-item">Chat Assistant</a>
+    <a href="#" class="nav-item">Reports</a>
+    <a href="#" class="nav-item">Profile</a>
+
+  </div>
+</nav>
+
+<!-- ================= DASHBOARD ================= -->
+
 <div class="max-w-7xl mx-auto px-6 py-10">
 
-  <!-- Page Header -->
-  <div class="mb-8">
-    <h2 class="text-2xl font-bold text-gray-800">Find the Right Specialist</h2>
-    <p class="text-gray-500">
+  <!-- Header -->
+  <div class="mb-10 bg-white rounded-3xl p-8 shadow-sm border border-indigo-100 animate-fadeUp">
+
+    <h2 class="text-3xl font-bold text-brand-primary">
+      Find the Right Specialist
+    </h2>
+
+    <p class="text-gray-500 mt-1">
       Browse our directory of verified mental health professionals and book a session.
     </p>
+
   </div>
 
   <!-- Doctors Grid -->
-  <div id="doctorsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-8">
+  <div id="doctorsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
   </div>
 
 </div>
 
-
 <script>
+
+// ================= DATA =================
 
 const doctors = [
   {
@@ -49,8 +111,9 @@ const doctors = [
     specialty: "Clinical Psychologist",
     experience: "12 years experience",
     rating: 4.9,
+    phone: "+91 98765 43210",
     image: "https://t3.ftcdn.net/jpg/02/60/04/08/360_F_260040863_IYfpDy5ebrfcfXV9l15rXbc573390f7q.jpg",
-    bio: "Specializes in anxiety disorders and cognitive behavioral therapy (CBT) for young adults."
+    bio: "Specializes in anxiety disorders and CBT therapy."
   },
   {
     id: 2,
@@ -58,17 +121,19 @@ const doctors = [
     specialty: "Psychiatrist",
     experience: "15 years experience",
     rating: 4.8,
+    phone: "+91 91234 56789",
     image: "https://img.freepik.com/premium-photo/portrait-male-doctor-with-stethoscope-medical-concept_1254992-166245.jpg",
-    bio: "Expert in mood disorders and medication management. Focuses on holistic recovery plans."
+    bio: "Expert in mood disorders and medication management."
   },
   {
     id: 3,
     name: "Dr. Emily Chen",
-    specialty: "Therapist, LMFT",
+    specialty: "Therapist",
     experience: "8 years experience",
     rating: 5.0,
+    phone: "+91 99887 66554",
     image: "https://t3.ftcdn.net/jpg/02/95/51/80/360_F_295518052_aO5d9CqRhPnjlNDTRDjKLZHNftqfsxzI.jpg",
-    bio: "Dedicated to couples counselling and family therapy. Compassionate and listener-focused."
+    bio: "Dedicated to couples counselling and family therapy."
   },
   {
     id: 4,
@@ -76,72 +141,63 @@ const doctors = [
     specialty: "Neurologist",
     experience: "20 years experience",
     rating: 4.7,
+    phone: "+91 90909 80808",
     image: "https://t4.ftcdn.net/jpg/03/20/52/31/360_F_320523164_tx7Rdd7I2XDTvvKfz2oRuRpKOPE5z0ni.jpg",
-    bio: "Specializing in the neurological aspects of mental health and sleep disorders."
+    bio: "Specializes in sleep disorders and neurological mental health."
   }
 ];
 
+// ================= RENDER DOCTORS =================
 
 const doctorsGrid = document.getElementById("doctorsGrid");
 
-doctors.forEach(doc => {
+doctors.forEach((doc, index) => {
 
   const card = document.createElement("div");
+
   card.className = `
-    bg-white rounded-3xl p-6 shadow-sm border border-gray-100
+    bg-white rounded-3xl p-6 shadow-sm
+    border border-indigo-100 border-l-4 border-l-brand-primary
     flex flex-col sm:flex-row gap-6
-    hover:shadow-md transition-shadow
+    hover:shadow-xl hover:-translate-y-1
+    transition-all duration-300 opacity-0 animate-fadeUp
   `;
+
+  card.style.animationDelay = `${index * 0.2}s`;
 
   card.innerHTML = `
 
-    <!-- Doctor Image -->
-    <div class="flex-shrink-0">
-      <img 
-        src="${doc.image}" 
-        alt="${doc.name}"
-        class="w-32 h-32 rounded-2xl object-cover shadow-sm bg-gray-200"
-      >
-    </div>
+    <img src="${doc.image}" 
+      class="w-32 h-32 rounded-2xl object-cover shadow-md animate-float">
 
-    <!-- Doctor Info -->
     <div class="flex-1">
 
-      <!-- Header Row -->
-      <div class="flex justify-between items-start">
+      <h3 class="text-xl font-bold">${doc.name}</h3>
 
-        <div>
-          <h3 class="text-xl font-bold text-gray-900">${doc.name}</h3>
-          <p class="text-brand-primary font-medium text-sm">${doc.specialty}</p>
-        </div>
+      <p class="text-brand-primary font-semibold text-sm">
+        ${doc.specialty}
+      </p>
 
-        <!-- Rating -->
-        <div class="flex items-center bg-yellow-50 px-2 py-1 rounded-lg">
-          <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-          </svg>
-          <span class="text-xs font-bold text-yellow-600">${doc.rating}</span>
-        </div>
-
-      </div>
-
-      <!-- Bio -->
-      <p class="text-gray-500 text-sm mt-3 leading-relaxed">
+      <p class="text-gray-500 text-sm mt-2">
         ${doc.bio}
       </p>
 
-      <!-- Footer -->
-      <div class="mt-4 flex items-center justify-between">
+      <div class="mt-3 text-sm text-gray-600">
+        📞 ${doc.phone}
+      </div>
 
-        <span class="text-xs font-semibold text-gray-400 bg-gray-50 px-3 py-1 rounded-full">
+      <div class="mt-4 flex justify-between items-center">
+
+        <span class="bg-indigo-50 px-3 py-1 rounded-full text-xs font-bold text-brand-primary">
           ${doc.experience}
         </span>
 
-        <button 
-          onclick="bookSession('${doc.name}')"
-          class="bg-brand-primary text-white px-5 py-2 rounded-xl font-bold text-sm
-          hover:bg-brand-primary-hover shadow-sm transition-colors">
+        <button onclick="bookSession('${doc.name}')"
+          class="bg-brand-primary text-white px-6 py-2 rounded-xl font-bold text-sm
+          hover:bg-brand-primary-hover hover:scale-105 transition-all duration-300 shadow-md">
+
           Book Session
+
         </button>
 
       </div>
@@ -152,13 +208,53 @@ doctors.forEach(doc => {
   doctorsGrid.appendChild(card);
 });
 
+// ================= BOOK SESSION =================
 
-// Button Click Handler
 function bookSession(name) {
   alert("Session booked with " + name);
 }
 
+// ================= MOBILE MENU =================
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+});
+
 </script>
+
+<!-- ================= NAV LINK STYLE ================= -->
+
+<style>
+
+.nav-item {
+  font-weight: 600;
+  color: #4B5563;
+  position: relative;
+}
+
+.nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: #6366F1;
+  transition: width 0.3s;
+}
+
+.nav-item:hover {
+  color: #6366F1;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+</style>
 
 </body>
 </html>

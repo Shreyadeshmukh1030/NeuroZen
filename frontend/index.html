@@ -3,8 +3,9 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>MindWell — Mental Health Intelligence</title>
+  <title>MindCare — Intelligent Mental Health Wellness</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Transform your mental health journey with AI-driven assessments and compassionate care." />
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,32 +16,62 @@
       theme: {
         extend: {
           colors: {
-            'brand-primary': '#2563eb',
-            'brand-primary-hover': '#1e40af',
-            'brand-bg': '#eff6ff',
-            'brand-text': '#1f2937'
+            'brand-primary': '#3b82f6',
+            'brand-secondary': '#06b6d4',
+            'brand-accent': '#a78bfa',
+            'brand-light': '#ede9fe',
+            'neutral-dark': '#0f172a',
+            'neutral-light': '#f8fafc'
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
           }
         }
       }
     }
   </script>
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
   <style>
+    * {
+      font-family: 'Inter', ui-sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #f8fafc 0%, #f3f0ff 50%, #faf5ff 100%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
     .glass {
-      backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.6);
     }
 
     .text-gradient {
-      background: linear-gradient(to right, #2563eb, #06b6d4);
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #a78bfa 100%);
       -webkit-background-clip: text;
-      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.9s ease;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .reveal.active {
@@ -53,166 +84,158 @@
     }
 
     @keyframes float {
-      0% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-18px);
-      }
-
-      100% {
-        transform: translateY(0);
-      }
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
     }
 
-    /* Background blobs for hero */
+    /* Premium blob gradients */
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.3;
-      animation: blobMove 12s infinite ease-in-out;
+      filter: blur(100px);
+      opacity: 0.25;
+      animation: blobMove 15s infinite ease-in-out;
       mix-blend-mode: multiply;
       z-index: 0;
     }
 
     .blob1 {
-      background: #2563eb;
-      width: 400px;
-      height: 400px;
-      top: -120px;
-      left: -120px;
+      background: #3b82f6;
+      width: 500px;
+      height: 500px;
+      top: -150px;
+      left: -150px;
       animation-delay: 0s;
     }
 
     .blob2 {
+      background: #a78bfa;
+      width: 450px;
+      height: 450px;
+      top: 200px;
+      right: -120px;
+      animation-delay: 5s;
+    }
+
+    .blob3 {
       background: #06b6d4;
       width: 350px;
       height: 350px;
-      top: 180px;
-      right: -140px;
-      animation-delay: 6s;
+      bottom: -50px;
+      left: 20%;
+      animation-delay: 10s;
     }
 
     @keyframes blobMove {
-      0%,
-      100% {
-        transform: translate(0, 0) scale(1);
-      }
-
-      50% {
-        transform: translate(20px, -30px) scale(1.1);
-      }
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -40px) scale(1.1); }
     }
 
     /* Typing effect */
     .typing {
-      border-right: 2px solid #2563eb;
+      border-right: 3px solid #3b82f6;
       white-space: nowrap;
       overflow: hidden;
       display: inline-block;
-      animation: typingAnim 4s steps(40, end) infinite;
       font-style: italic;
       font-weight: 600;
-      font-size: 1.5rem;
-      color: #374151;
-      max-width: 650px;
+      font-size: 1.4rem;
+      color: #475569;
+      max-width: 700px;
+      animation: typingAnim 5s steps(50, end) infinite;
     }
 
     @keyframes typingAnim {
-      0% {
-        width: 0;
-      }
-
-      50% {
-        width: 100%;
-      }
-
-      100% {
-        width: 0;
-      }
+      0% { width: 0; }
+      50% { width: 100%; }
+      100% { width: 0; }
     }
 
-    /* Quote container positioning */
     #quotesContainer {
       position: relative;
-      height: 3.5rem;
-      margin-bottom: 3.5rem;
+      height: 4rem;
+      margin-bottom: 3rem;
     }
 
-    /* Quote author */
     .quote-author {
       font-style: normal;
       font-weight: 600;
-      font-size: 1rem;
-      color: #2563eb;
-      margin-top: 0.3rem;
+      font-size: 0.95rem;
+      background: linear-gradient(135deg, #3b82f6, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 0.5rem;
       text-align: center;
     }
 
-    /* Button hover */
-    .btn-hover:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 20px rgb(37 99 235 / 0.4);
-      transition: all 0.3s ease;
+    .btn-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Responsive text scaling */
+    .btn-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+    }
+
+    .feature-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+    }
+
     @media (max-width: 768px) {
       h1 {
-        font-size: 4.5rem !important;
+        font-size: 3rem !important;
       }
 
       .typing {
-        font-size: 1.25rem !important;
+        font-size: 1.1rem !important;
         max-width: 90vw;
       }
-    }
-
-    /* Gradient overlay on hero image */
-    .hero-image-wrapper {
-      position: relative;
-    }
-
-    .hero-image-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(37, 99, 235, 0.3), rgba(6, 182, 212, 0.3));
-      border-radius: 2rem;
-      pointer-events: none;
-      z-index: 1;
     }
   </style>
 </head>
 
-<body class="bg-brand-bg text-brand-text">
+<body class="text-neutral-dark">
 
   <!-- Background Blobs -->
   <div class="blob blob1"></div>
   <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
 
   <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b">
-    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/50">
+    <div class="max-w-7xl mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
+      <!-- Logo -->
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-brand-primary rounded-xl shadow-md"></div>
-        <span class="text-3xl font-black">MindWell</span>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-primary to-brand-accent shadow-md flex items-center justify-center">
+          <span class="text-white font-bold">♡</span>
+        </div>
+        <span class="text-2xl font-bold text-neutral-dark font-display">MindCare</span>
       </div>
 
-      <div class="hidden md:flex items-center space-x-8">
-        <a href="#features" class="font-semibold text-gray-600 hover:text-brand-primary">Features</a>
-        <a href="#how-it-works" class="font-semibold text-gray-600 hover:text-brand-primary">How it Works</a>
-        <a href="#community" class="font-semibold text-gray-600 hover:text-brand-primary">Community</a>
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center gap-1">
+        <a href="#features" class="px-4 py-2 rounded-lg font-medium text-slate-600 hover:text-brand-primary hover:bg-slate-100 transition-all">Features</a>
+        <a href="#how-it-works" class="px-4 py-2 rounded-lg font-medium text-slate-600 hover:text-brand-primary hover:bg-slate-100 transition-all">How It Works</a>
+        <a href="#community" class="px-4 py-2 rounded-lg font-medium text-slate-600 hover:text-brand-primary hover:bg-slate-100 transition-all">Community</a>
+      </div>
 
-        <a href="login.html"
-          class="border-2 border-brand-primary text-brand-primary px-7 py-2 rounded-full font-bold">
+      <!-- CTA Buttons -->
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="hidden md:block px-6 py-2 rounded-lg font-semibold text-brand-primary border-2 border-brand-primary hover:bg-blue-50 transition-all">
           Log In
         </a>
-
-        <a href="register.html"
-          class="bg-brand-primary text-white px-7 py-2 rounded-full font-bold hover:bg-brand-primary-hover transition btn-hover">
+        <a href="register.html" class="px-6 py-2 rounded-lg font-semibold bg-gradient-to-r from-brand-primary to-brand-secondary text-white hover:shadow-lg btn-hover transition-all">
           Get Started
         </a>
       </div>
@@ -220,128 +243,220 @@
   </nav>
 
   <!-- HERO -->
-  <header class="min-h-screen flex items-center pt-28 overflow-hidden relative z-10">
+  <header class="min-h-screen flex items-center pt-32 pb-16 overflow-hidden relative z-10">
+    <div class="max-w-7xl mx-auto w-full px-6 md:px-8 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
+      <!-- Left Content -->
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-blue-50 border border-blue-200">
+          <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
+          <span class="text-sm font-semibold text-brand-primary">Mental Health Intelligence</span>
+        </div>
 
-    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
-
-      <div class="reveal relative z-10">
-
-        <span
-          class="inline-block px-6 py-2 mb-8 font-bold tracking-widest text-brand-primary uppercase glass rounded-full">
-          Mental Health Intelligence
-        </span>
-
-        <h1 class="text-7xl lg:text-9xl font-black leading-none mb-8">
-          Predict &<br />
-          <span class="text-gradient">Heal Together</span>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 font-display text-neutral-dark">
+          Transform Your
+          <span class="text-gradient block mt-2">Mental Wellness</span>
         </h1>
 
-        <p class="text-2xl text-gray-700 mb-12 max-w-xl">
-          Empowering mental wellness through AI-driven assessments and human-centered care.
+        <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-xl leading-relaxed">
+          Empowering mental health through AI-driven assessments, compassionate care, and evidence-based guidance. Your journey to wellness starts here.
         </p>
 
         <!-- Dynamic Typing Quotes -->
-        <div id="quotesContainer" class="relative h-14 mb-14 text-center">
+        <div id="quotesContainer" class="relative h-20 mb-12">
           <p id="quoteText" class="typing mx-auto"></p>
           <p id="quoteAuthor" class="quote-author"></p>
         </div>
 
-        <div class="flex flex-wrap gap-6 justify-center md:justify-start">
-          <a href="register.html"
-            class="bg-brand-primary text-white px-12 py-5 rounded-full font-black text-lg shadow-xl hover:bg-brand-primary-hover transition btn-hover">
-            Start Assessment
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="login.html" class="px-8 py-4 rounded-lg bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-semibold shadow-lg hover:shadow-xl btn-hover text-center">
+            Start Free Assessment
           </a>
-
-          <button
-            class="glass px-12 py-5 rounded-full font-black text-lg border shadow btn-hover hover:shadow-lg transition">
-            Watch Demo
+          <button class="px-8 py-4 rounded-lg glass border border-white/50 font-semibold text-slate-700 hover:border-brand-primary/30 hover:bg-blue-50/50 btn-hover transition-all">
+            Watch Demo Video
           </button>
         </div>
+
+        <p class="text-sm text-slate-500 mt-6">No credit card required • Takes 10 minutes</p>
       </div>
 
-      <div class="animate-float reveal hero-image-wrapper">
-        <div class="glass p-6 rounded-[3rem] shadow-2xl relative overflow-hidden">
-          <img src="./../frontend/images/heroimage.png" class="rounded-[2rem] w-full relative z-10" alt="Mental health illustration" />
-          <div class="hero-image-gradient"></div>
+      <!-- Right Image -->
+      <div class="animate-float reveal hidden lg:block">
+        <div class="relative">
+          <!-- Gradient background -->
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/20 via-brand-accent/20 to-brand-secondary/20 rounded-3xl blur-2xl"></div>
+          <!-- Card -->
+          <div class="glass p-8 rounded-3xl shadow-2xl relative backdrop-blur-xl border border-white/40">
+            <div class="rounded-2xl overflow-hidden aspect-square">
+  <img 
+    src="./../frontend/images/heroimage.png"
+    alt="Mental Health Illustration"
+    class="w-full h-full object-cover"
+  />
+</div>
+
+          </div>
         </div>
       </div>
     </div>
   </header>
 
   <!-- FEATURES -->
-  <section id="features" class="py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="text-center mb-24 reveal">
-        <h2 class="text-6xl font-black mb-6">Cutting-edge Mental Health Tools</h2>
-        <p class="text-2xl text-gray-500 mb-4">
-          Technology designed with empathy and science.
-        </p>
-        <p class="italic text-gray-400">
-          “Healing is not linear — and that’s okay.”
+  <section id="features" class="relative py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 md:px-8">
+      <!-- Section Header -->
+      <div class="text-center mb-20 reveal">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 font-display text-neutral-dark">
+          Intelligent Mental Health Tools
+        </h2>
+        <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
+          Powered by cutting-edge technology and compassionate design, built to support your mental wellness journey.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-12">
-
-        <div class="glass p-12 rounded-[3rem] reveal hover:shadow-2xl transition">
-          <h3 class="text-3xl font-black mb-6">Predictive AI Analysis</h3>
-          <p class="text-xl text-gray-500">
-            Early detection and personalized insights for proactive care.
+      <!-- Features Grid -->
+      <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+        <!-- Feature 1 -->
+        <div class="feature-card glass p-8 md:p-10 rounded-2xl border border-white/40 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <span class="text-2xl">🧠</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-neutral-dark font-display">AI-Powered Analysis</h3>
+          <p class="text-slate-600 leading-relaxed">
+            Early detection and personalized insights for proactive mental health management.
           </p>
+          <div class="mt-6 pt-6 border-t border-slate-200">
+            <div class="text-sm font-semibold text-brand-primary">Learn more →</div>
+          </div>
         </div>
 
-        <div class="glass p-12 rounded-[3rem] reveal hover:shadow-2xl transition">
-          <h3 class="text-3xl font-black mb-6">Validated Assessments</h3>
-          <p class="text-xl text-gray-500">
-            Clinically approved psychological screening tools.
+        <!-- Feature 2 -->
+        <div class="feature-card glass p-8 md:p-10 rounded-2xl border border-white/40 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <span class="text-2xl">✓</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-neutral-dark font-display">Validated Assessments</h3>
+          <p class="text-slate-600 leading-relaxed">
+            Clinically approved psychological screening tools developed with mental health experts.
           </p>
+          <div class="mt-6 pt-6 border-t border-slate-200">
+            <div class="text-sm font-semibold text-brand-primary">Learn more →</div>
+          </div>
         </div>
 
-        <div class="glass p-12 rounded-[3rem] reveal hover:shadow-2xl transition">
-          <h3 class="text-3xl font-black mb-6">Specialist Network</h3>
-          <p class="text-xl text-gray-500">
-            Secure access to licensed mental health professionals.
+        <!-- Feature 3 -->
+        <div class="feature-card glass p-8 md:p-10 rounded-2xl border border-white/40 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <span class="text-2xl">👥</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 text-neutral-dark font-display">Expert Support</h3>
+          <p class="text-slate-600 leading-relaxed">
+            Connect with licensed mental health professionals for personalized guidance and care.
           </p>
+          <div class="mt-6 pt-6 border-t border-slate-200">
+            <div class="text-sm font-semibold text-brand-primary">Learn more →</div>
+          </div>
         </div>
-
       </div>
     </div>
   </section>
 
   <!-- COMMUNITY -->
-  <section id="community" class="py-32 bg-brand-bg">
-    <div class="max-w-7xl mx-auto px-6 reveal">
-      <div class="glass rounded-[3rem] overflow-hidden grid lg:grid-cols-2 shadow-xl">
+  <section id="community" class="py-24 md:py-32">
+    <div class="max-w-7xl mx-auto px-6 md:px-8 reveal">
+      <div class="glass rounded-3xl overflow-hidden grid lg:grid-cols-2 gap-0 border border-white/40 shadow-xl">
+        <!-- Left: Image -->
+        <div class="hidden lg:block relative min-h-96 overflow-hidden">
 
-        <img src="./../frontend/images/communityimage.png" class="w-full h-full object-cover" alt="Community image" />
+  <img 
+    src="./../frontend/images/communityimage.png"
+    alt="Community Support"
+    class="absolute inset-0 w-full h-full object-cover"
+  />
 
-        <div class="p-20">
-          <h2 class="text-6xl font-black mb-6">You’re not alone</h2>
-          <p class="text-2xl text-gray-500 mb-6">
-            Safe, moderated peer communities that listen without judgment.
+  <!-- Overlay Gradient -->
+  <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/40 to-brand-accent/40"></div>
+
+</div>
+
+
+        <!-- Right: Content -->
+        <div class="p-10 md:p-14 flex flex-col justify-center">
+          <h2 class="text-4xl md:text-5xl font-black mb-6 text-neutral-dark font-display">You're Never Alone</h2>
+          <p class="text-lg md:text-xl text-slate-600 mb-6 leading-relaxed">
+            Safe, moderated communities where you can connect with others, share experiences, and find support without judgment.
           </p>
-          <p class="italic text-gray-400 mb-10">
-            “Sometimes, being heard is the first step to healing.”
-          </p>
+          
+          <div class="flex items-start gap-4 mb-8 p-6 bg-blue-50 rounded-xl border border-blue-200">
+            <span class="text-2xl flex-shrink-0">💬</span>
+            <div>
+              <p class="font-semibold text-slate-900 mb-1">Supportive Community Spaces</p>
+              <p class="text-sm text-slate-600">Connect with others who understand your journey in our welcoming peer communities.</p>
+            </div>
+          </div>
 
-          <button
-            class="bg-brand-primary text-white px-12 py-5 rounded-full font-black text-lg hover:bg-brand-primary-hover transition btn-hover">
-            Explore Groups
-          </button>
+          <a href="round1.html" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-semibold hover:shadow-lg btn-hover transition-all w-fit">
+            Explore Community
+            <span class="ml-2">→</span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-gray-50 py-16 border-t">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6">
-      <p class="text-gray-500">&copy; 2026 MindWell. All rights reserved.</p>
-      <div class="flex gap-8 text-gray-500">
-        <span>Terms</span>
-        <span>Privacy</span>
-        <span>Cookies</span>
+  <footer class="border-t border-slate-200 py-12 md:py-16 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-8">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <!-- Brand Column -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-primary to-brand-accent flex items-center justify-center">
+              <span class="text-white font-bold text-sm">♡</span>
+            </div>
+            <span class="font-bold text-neutral-dark font-display">MindCare</span>
+          </div>
+          <p class="text-sm text-slate-600">Empowering mental wellness through intelligent technology and compassionate care.</p>
+        </div>
+
+        <!-- Product Links -->
+        <div>
+          <h4 class="font-semibold text-neutral-dark mb-4">Product</h4>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li><a href="#features" class="hover:text-brand-primary transition">Features</a></li>
+            <li><a href="#community" class="hover:text-brand-primary transition">Community</a></li>
+            <li><a href="round1.html" class="hover:text-brand-primary transition">Get Started</a></li>
+          </ul>
+        </div>
+
+        <!-- Company Links -->
+        <div>
+          <h4 class="font-semibold text-neutral-dark mb-4">Company</h4>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li><a href="#" class="hover:text-brand-primary transition">About</a></li>
+            <li><a href="#" class="hover:text-brand-primary transition">Blog</a></li>
+            <li><a href="#" class="hover:text-brand-primary transition">Careers</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal Links -->
+        <div>
+          <h4 class="font-semibold text-neutral-dark mb-4">Legal</h4>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li><a href="#" class="hover:text-brand-primary transition">Privacy</a></li>
+            <li><a href="#" class="hover:text-brand-primary transition">Terms</a></li>
+            <li><a href="#" class="hover:text-brand-primary transition">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Footer -->
+      <div class="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-slate-600">&copy; 2026 MindCare. All rights reserved.</p>
+        <div class="flex gap-6 text-sm text-slate-600">
+          <a href="#" class="hover:text-brand-primary transition">Terms</a>
+          <a href="#" class="hover:text-brand-primary transition">Privacy</a>
+          <a href="#" class="hover:text-brand-primary transition">Cookies</a>
+        </div>
       </div>
     </div>
   </footer>
